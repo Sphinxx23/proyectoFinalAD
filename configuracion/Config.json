@@ -1,0 +1,6 @@
+{
+  "url": "jdbc:postgresql://ep-broad-union-a29uia00-pooler.eu-central-1.aws.neon.tech/proyectoFinalAD",
+  "user": "proyectoJuego_owner",
+  "password": "eb4xsQc0ENkU",
+  "sslMode": "require"
+}

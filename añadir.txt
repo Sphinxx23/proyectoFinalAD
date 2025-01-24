@@ -1,0 +1,9 @@
+    - SWING
+    - (SWING) Crear una vista donde se muestren todos los jugadores y permita seleccionarlos para ver sus detalles.
+    - Agrega un panel de estadísticas donde se obtenga una clasificación de jugadores por más horas de juego, mayor puntuación (y/o experiencia).
+    - Agrega un panel de estadísticas donde se obtenga una clasificación de videojuegos por más horas de juego, mayor número de jugadores.
+
+
+
+
+
