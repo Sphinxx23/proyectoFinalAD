@@ -26,23 +26,29 @@ public class VistaConsolaRouter {
             do {
                 System.out.println("\n=== Menú Principal con Router ===");
                 System.out.println("1. Agregar Jugador");
-                System.out.println("2. Listar todos los Jugadores");
-                System.out.println("3. Buscar jugador por ID");
-                System.out.println("4. Buscar jugador por Nombre");
-                System.out.println("5. Eliminar Jugador");
-                System.out.println("6. Listar Videojuegos a los que ha jugado X jugador");
-                System.out.println("7. Agregar Videojuego");
-                System.out.println("8. Listar Videojuegos");
-                System.out.println("9. Listar Videojuegos de mas caro a mas barato");
-                System.out.println("10. Listar Videojuegos por genero");
-                System.out.println("11. Buscar videojuego por ID");
-                System.out.println("12. Eliminar Videojuego");
-                System.out.println("13. Agregar Partida");
-                System.out.println("14. Listar Partidas");
-                System.out.println("15. Listar partida por ID");
-                System.out.println("16. Eliminar Partida");
+                System.out.println("2. Editar Jugador");
+                System.out.println("3. Listar todos los Jugadores");
+                System.out.println("4. Buscar jugador por ID");
+                System.out.println("5. Buscar jugador por Nombre");
+                System.out.println("6. Eliminar Jugador");
+                System.out.println("7. Listar Videojuegos a los que ha jugado X jugador");
+                System.out.println("8. Agregar Videojuego");
+                System.out.println("9. Editar Videojuego");
+                System.out.println("10. Listar Videojuegos");
+                System.out.println("11. Listar Videojuegos de mas caro a mas barato");
+                System.out.println("12. Listar Videojuegos por genero");
+                System.out.println("13. Buscar videojuego por ID");
+                System.out.println("14. Eliminar Videojuego");
+                System.out.println("15. Agregar Partida");
+                System.out.println("16. Listar Partidas");
+                System.out.println("17. Listar partida por ID");
+                System.out.println("18. Eliminar Partida");
+                System.out.println("19. Videojuegos con mas tiempo jugado");
+                System.out.println("20. Videojuegos con mas jugadores");
+                System.out.println("21. Jugadores con mas tiempo jugado");
+                System.out.println("22. Jugadores con mas puntuación");
 
-                System.out.println("17. Salir");
+                System.out.println("23. Salir");
                 System.out.print("Seleccione una opción: ");
                 opcion = scanner.nextLine();
 
@@ -57,25 +63,199 @@ public class VistaConsolaRouter {
 
             switch (opcionn) {
                 case 1 -> agregarJugador(scanner);
-                case 2 -> listarJugadores();
-                case 3 -> listarJugadorPorId(scanner);
-                case 4 -> buscarJugadorPorNombre(scanner);
-                case 5 -> eliminarJugador(scanner);
-                case 6 -> listarVidejuegosJugadoPorXJugador(scanner);
-                case 7 -> agregarVideojuego(scanner);
-                case 8 -> listarVideojuegos();
-                case 9 -> listarVideojuegosOrdenadoCaroBarato();
-                case 10 -> listarVideojuegoPorGenero(scanner);
-                case 11 -> listarVideojuegoPorId(scanner);
-                case 12 -> eliminarVideojuego(scanner);
-                case 13 -> agregarPartida(scanner);
-                case 14 -> listarPartidas(scanner);
-                case 15 -> listarPartidaPorId(scanner);
-                case 16 -> eliminarPartida(scanner);
-                case 17 -> System.out.println("Saliendo del sistema...");
+                case 2 -> editarJugador(scanner);
+                case 3 -> listarJugadores();
+                case 4 -> listarJugadorPorId(scanner);
+                case 5 -> buscarJugadorPorNombre(scanner);
+                case 6 -> eliminarJugador(scanner);
+                case 7 -> listarVidejuegosJugadoPorXJugador(scanner);
+                case 8 -> agregarVideojuego(scanner);
+                case 9 -> editarVideojuego(scanner);
+                case 10 -> listarVideojuegos();
+                case 11-> listarVideojuegosOrdenadoCaroBarato();
+                case 12 -> listarVideojuegoPorGenero(scanner);
+                case 13 -> listarVideojuegoPorId(scanner);
+                case 14 -> eliminarVideojuego(scanner);
+                case 15 -> agregarPartida(scanner);
+                case 16 -> listarPartidas(scanner);
+                case 17 -> listarPartidaPorId(scanner);
+                case 18 -> eliminarPartida(scanner);
+                case 19 ->estadisticaVideojuegoHoras();
+                case 20 ->estadisticaVideojuegoJugador();
+                case 21 ->estadisticaJugadorHoras();
+                case 22 ->estadisticaJugadorPuntuacion();
+                case 23 -> System.out.println("Saliendo del sistema...");
                 default -> System.out.println("Opción no válida. Intente nuevamente.");
             }
-        } while (opcionn != 17);
+        } while (opcionn != 23);
+    }
+
+    private void editarVideojuego(Scanner scanner) {
+
+        System.out.print("Ingrese ID del videojuego: ");
+        String idd = scanner.nextLine();
+
+        do{
+            if(Validador.esNumero(idd)){
+                break;
+            }else{
+                System.out.println("El ID debe ser un numero.");
+                System.out.print("Ingrese ID del videojuego: ");
+                idd = scanner.nextLine();
+            }
+        }while(true);
+        int id = Integer.parseInt(idd);
+
+        System.out.print("Ingrese el título del videojuego: ");
+        String titulo = scanner.nextLine();
+
+        do{
+            if(Validador.esStringVacio(titulo)){
+                System.out.println("El titulo no puede estar vacio.");
+                System.out.print("Ingrese el título del videojuego: ");
+                titulo = scanner.nextLine();
+            }else{
+                break;
+            }
+        }while(true);
+
+
+        System.out.print("Ingrese el genero del videojuego: ");
+        String genero = scanner.nextLine();
+
+        do{
+            if(Validador.esStringVacio(genero)){
+                System.out.println("El genero no puede estar vacio.");
+                System.out.print("Ingrese el genero del videojuego: ");
+                genero = scanner.nextLine();
+            }else{
+                break;
+            }
+        }while(true);
+
+
+        System.out.print("Ingrese el precio del videojuego: ");
+        String prec = scanner.nextLine();
+
+        do{
+            if(Validador.esDouble(prec)){
+                break;
+            }else{
+                System.out.println("El precio debe ser un numero.");
+                System.out.print("Ingrese el precio del videojuego: ");
+                prec = scanner.nextLine();
+            }
+        }while(true);
+        double precio = Double.parseDouble(prec);
+
+
+        boolean b = (boolean)router.ejecutarAccion("videojuegos", "editarVideojuego", id,titulo, genero, precio);
+        if(b){
+            System.out.println("Videojuego editado correctamente");
+        }else{
+            System.out.println("Error al editar");
+        }
+
+    }
+
+    private void editarJugador(Scanner scanner) {
+
+        System.out.print("Ingrese ID del jugador: ");
+        String idd = scanner.nextLine();
+
+        do{
+            if(Validador.esNumero(idd)){
+                break;
+            }else{
+                System.out.println("El ID debe ser un numero.");
+                System.out.print("Ingrese ID del jugador: ");
+                idd = scanner.nextLine();
+            }
+        }while(true);
+        int id = Integer.parseInt(idd);
+
+        System.out.print("Ingrese nombre del jugador: ");
+        String nombre = scanner.nextLine();
+
+        do{
+            if(Validador.esStringVacio(nombre)){
+                System.out.println("El nombre no puede estar vacio.");
+                System.out.print("Ingrese nombre del jugador: ");
+                nombre = scanner.nextLine();
+            }else{
+                break;
+            }
+        }while(true);
+
+
+        System.out.print("Ingrese nivel del jugador: ");
+        String nivell = scanner.nextLine();
+
+        do{
+            if(Validador.esNumero(nivell)){
+                break;
+            }else{
+                System.out.println("El nivel debe ser un numero.");
+                System.out.print("Ingrese nivel del jugador: ");
+                nivell = scanner.nextLine();
+            }
+        }while(true);
+        int nivel = Integer.parseInt(nivell);
+
+
+        System.out.print("Ingrese la puntuación del jugador: ");
+        String puntuac = scanner.nextLine();
+
+        do{
+            if(Validador.esNumero(puntuac)){
+                break;
+            }else{
+                System.out.println("La puntuación debe ser un numero.");
+                System.out.print("Ingrese la puntuación del jugador: ");
+                puntuac = scanner.nextLine();
+            }
+        }while(true);
+        int puntuacion = Integer.parseInt(puntuac);
+
+        boolean b = (boolean)router.ejecutarAccion("jugadores", "editarJugador", id,nombre, nivel, puntuacion);
+           if(b){
+               System.out.println("Jugador editado correctamente");
+           }else{
+               System.out.println("Error al editar");
+           }
+    }
+
+    private void estadisticaJugadorPuntuacion() {
+        List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMayorPuntuacion");
+
+        for (Object[] videoJuego : videoJuegos){
+            System.out.println("ID: " +  videoJuego[0] +" Nombre: "+  videoJuego[1] + " Puntuacion: " + videoJuego[2]);
+        }
+    }
+    private void estadisticaJugadorHoras() {
+        List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMasHoras");
+
+        for (Object[] videoJuego : videoJuegos){
+            System.out.println("ID: " +  videoJuego[0] +" Nombre: "+  videoJuego[1] + " Segundos jugados: " + videoJuego[2]);
+        }
+
+    }
+
+    private void estadisticaVideojuegoJugador() {
+        List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosJugadoresTotales");
+
+        for (Object[] videoJuego : videoJuegos){
+            System.out.println("ID: " +  videoJuego[0] +" Titulo: "+  videoJuego[1] + " Total Jugadores: " + videoJuego[2]);
+        }
+
+    }
+
+    private void estadisticaVideojuegoHoras() {
+        List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosHoras");
+
+        for (Object[] videoJuego : videoJuegos){
+            System.out.println("ID: " +  videoJuego[0] +" Titulo: "+  videoJuego[1] + " Segundos jugados : " + videoJuego[2]);
+        }
     }
 
     private void listarVidejuegosJugadoPorXJugador(Scanner scanner) {
@@ -262,6 +442,8 @@ public class VistaConsolaRouter {
         boolean obj = (boolean)router.ejecutarAccion("partidas", "agregarPartida", idJugador, idVideojuego, generarTiempoAleatorio());
 
         mensajeRegistro(obj);
+
+        scanner.nextLine();
 
     }
 

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class VistaSwingRouter {
     private static Router router; // Asume que el router ya está inicializado
@@ -24,25 +25,31 @@ public class VistaSwingRouter {
         // Crear la ventana principal
         frame = new JFrame("Menú Principal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
+        frame.setSize(600, 800);
 
         // Crear el panel principal
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(17, 1, 10, 10)); // 17 opciones, espaciadas
+        panel.setLayout(new GridLayout(21, 1, 10, 10)); // 21 opciones, espaciadas
 
         // Crear botones para cada opción del menú
         String[] opciones = {
                 "Agregar Jugador",
                 "Listar todos los Jugadores",
+                "Editar Jugador",
                 "Buscar jugador por ID",
                 "Buscar jugador por Nombre",
+                "Estadistica jugadores mas horas",
+                "Estadistica jugadores mas puntuación",
                 "Eliminar Jugador",
                 "Listar Videojuegos a los que ha jugado X jugador",
                 "Agregar Videojuego",
                 "Listar Videojuegos",
+                "Editar Videojuego",
                 "Listar Videojuegos de más caro a más barato",
                 "Listar Videojuegos por género",
                 "Buscar videojuego por ID",
+                "Estadistica videojuegos mas horas",
+                "Estadistica videojuegos mas jugadores",
                 "Eliminar Videojuego",
                 "Agregar Partida",
                 "Listar Partidas",
@@ -81,11 +88,20 @@ public class VistaSwingRouter {
                 case "Listar todos los Jugadores":
                     listarJugadores();
                     break;
+                case "Editar Jugador":
+                    editarJugador();
+                    break;
                 case "Buscar jugador por ID":
                     buscarJugadorPorId();
                     break;
                 case "Buscar jugador por Nombre":
                     buscarJugadorPorNombre();
+                    break;
+                case "Estadistica jugadores mas horas":
+                    listarEstadisticaJugadoresMasHoras();
+                    break;
+                case "Estadistica jugadores mas puntuación":
+                    listarEstadisticaJugadoresMayorPuntuacion();
                     break;
                 case "Eliminar Jugador":
                     eliminarJugador();
@@ -98,6 +114,9 @@ public class VistaSwingRouter {
                     break;
                 case "Listar Videojuegos":
                     listarVideojuegos();
+                    break;
+                case "Editar Videojuego":
+                    editarVideojuego();
                     break;
                 case "Listar Videojuegos de más caro a más barato":
                     listarVideojuegosCaroBarato();
@@ -123,12 +142,54 @@ public class VistaSwingRouter {
                 case "Eliminar Partida":
                     eliminarPartida();
                     break;
+                case "Estadistica videojuegos mas horas":
+                    listarEstadisticasVideojuegosHoras();
+                    break;
+                case "Estadistica videojuegos mas jugadores":
+                    listarEstadisticasVideojuegosTotalJugadores();
+                    break;
                 case "Salir":
                     System.exit(0);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opción no reconocida", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+        private void editarVideojuego() {
+            String idVideojuego = JOptionPane.showInputDialog("Ingrese el ID del videojuego a editar:");
+            String nuevoTitulo = JOptionPane.showInputDialog("Ingrese el nuevo título del videojuego:");
+            String nuevoGenero = JOptionPane.showInputDialog("Ingrese el nuevo género del videojuego:");
+            String nuevoPrecio = JOptionPane.showInputDialog("Ingrese el nuevo precio del videojuego:");
+
+            boolean resultado = (boolean) router.ejecutarAccion(
+                    "videojuegos",
+                    "editarVideojuego",
+                    Integer.parseInt(idVideojuego),
+                    nuevoTitulo,
+                    nuevoGenero,
+                    Double.parseDouble(nuevoPrecio)
+            );
+
+            mostrarResultado(resultado);
+        }
+
+        private void editarJugador() {
+            String idJugador = JOptionPane.showInputDialog("Ingrese el ID del jugador a editar:");
+            String nuevoNombre = JOptionPane.showInputDialog("Ingrese el nuevo nombre del jugador:");
+            String nuevoNivel = JOptionPane.showInputDialog("Ingrese el nuevo nivel del jugador:");
+            String nuevaPuntuacion = JOptionPane.showInputDialog("Ingrese la nueva puntuación del jugador:");
+
+            boolean resultado = (boolean) router.ejecutarAccion(
+                    "jugadores",
+                    "editarJugador",
+                    Integer.parseInt(idJugador),
+                    nuevoNombre,
+                    Integer.parseInt(nuevoNivel),
+                    Integer.parseInt(nuevaPuntuacion)
+            );
+
+            mostrarResultado(resultado);
         }
 
         private void agregarJugador() {
@@ -233,7 +294,7 @@ public class VistaSwingRouter {
 
         private void buscarJugadorPorNombre() {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del jugador:");
-            Object jugador = router.ejecutarAccion("jugadores", "buscarPorNombre", nombre);
+            Object jugador = router.ejecutarAccion("jugadores", "buscarJugadorPorNombre", nombre);
             JOptionPane.showMessageDialog(null, jugador, "Resultado", JOptionPane.INFORMATION_MESSAGE);
         }
 
@@ -286,7 +347,7 @@ public class VistaSwingRouter {
             String genero = JOptionPane.showInputDialog("Ingrese el género del videojuego:");
             String precio = JOptionPane.showInputDialog("Ingrese el precio del videojuego:");
 
-            boolean resultado = (boolean) router.ejecutarAccion("videojuegos", "agregarVideojuego", titulo, genero, Integer.parseInt(precio));
+            boolean resultado = (boolean) router.ejecutarAccion("videojuegos", "agregarVideojuego", titulo, genero, Double.parseDouble(precio));
             mostrarResultado(resultado);
         }
 
@@ -360,8 +421,13 @@ public class VistaSwingRouter {
             String idJugador = JOptionPane.showInputDialog("Ingrese el ID del jugador:");
             String idVideojuego = JOptionPane.showInputDialog("Ingrese el ID del videojuego:");
 
-            boolean resultado = (boolean) router.ejecutarAccion("partidas", "agregarPartida", Integer.parseInt(idJugador), Integer.parseInt(idVideojuego));
+            boolean resultado = (boolean) router.ejecutarAccion("partidas", "agregarPartida", Integer.parseInt(idJugador), Integer.parseInt(idVideojuego), generarTiempoAleatorio());
             mostrarResultado(resultado);
+        }
+
+        private int generarTiempoAleatorio() {
+            Random r = new Random();
+            return r.nextInt(1,3600);
         }
 
         private void listarPartidaPorId() {
@@ -402,5 +468,134 @@ public class VistaSwingRouter {
                 JOptionPane.showMessageDialog(frame, "ID inválido. Por favor ingrese un número válido.");
             }
         }
+
+        private void listarEstadisticasVideojuegosHoras() {
+            // Simulamos los datos obtenidos de la base de datos
+            ArrayList<Object[]> listaEstadisticas = (ArrayList<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosHoras");
+
+            // Preparamos los datos para la tabla
+            String[][] data = new String[listaEstadisticas.size()][3]; // 3 columnas: ID, Título, Tiempo Total, Jugadores Totales
+
+            for (int i = 0; i < listaEstadisticas.size(); i++) {
+                Object[] estadistica = listaEstadisticas.get(i);
+                data[i][0] = String.valueOf(estadistica[0]); // ID del videojuego
+                data[i][1] = String.valueOf(estadistica[1]); // Título del videojuego
+                data[i][2] = String.valueOf(estadistica[2]); // Tiempo total jugado
+                 }
+
+            // Definimos las columnas
+            String[] columnas = {"ID", "Título", "Tiempo Total (Segundos)"};
+
+            // Creamos la tabla
+            JTable tablaEstadisticas = new JTable(data, columnas);
+            tablaEstadisticas.setFillsViewportHeight(true);
+
+            // Envolvemos la tabla en un JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaEstadisticas);
+
+            // Creamos el marco para mostrar la tabla
+            JFrame tablaFrame = new JFrame("Estadísticas de Videojuegos");
+            tablaFrame.setSize(800, 400); // Ajustamos el tamaño de la ventana
+            tablaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            tablaFrame.add(scrollPane);
+            tablaFrame.setVisible(true);
+        }
+
+        private void listarEstadisticasVideojuegosTotalJugadores() {
+            // Simulamos los datos obtenidos de la base de datos
+            ArrayList<Object[]> listaEstadisticas = (ArrayList<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosJugadoresTotales");
+
+            // Preparamos los datos para la tabla
+            String[][] data = new String[listaEstadisticas.size()][3]; // 3 columnas: ID, Título, Tiempo Total, Jugadores Totales
+
+            for (int i = 0; i < listaEstadisticas.size(); i++) {
+                Object[] estadistica = listaEstadisticas.get(i);
+                data[i][0] = String.valueOf(estadistica[0]); // ID del videojuego
+                data[i][1] = String.valueOf(estadistica[1]); // Título del videojuego
+                data[i][2] = String.valueOf(estadistica[2]); // Tiempo total jugado
+            }
+
+            // Definimos las columnas
+            String[] columnas = {"ID", "Título", "Total de jugadores"};
+
+            // Creamos la tabla
+            JTable tablaEstadisticas = new JTable(data, columnas);
+            tablaEstadisticas.setFillsViewportHeight(true);
+
+            // Envolvemos la tabla en un JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaEstadisticas);
+
+            // Creamos el marco para mostrar la tabla
+            JFrame tablaFrame = new JFrame("Estadísticas de Videojuegos");
+            tablaFrame.setSize(800, 400); // Ajustamos el tamaño de la ventana
+            tablaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            tablaFrame.add(scrollPane);
+            tablaFrame.setVisible(true);
+        }
+
+        private void listarEstadisticaJugadoresMasHoras() {
+            // Simulamos los datos obtenidos de la base de datos
+            ArrayList<Object[]> listaEstadisticas = (ArrayList<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMasHoras");
+
+            // Preparamos los datos para la tabla
+            String[][] data = new String[listaEstadisticas.size()][3]; // 3 columnas: ID, Nombre, Horas Jugadas
+
+            for (int i = 0; i < listaEstadisticas.size(); i++) {
+                Object[] estadistica = listaEstadisticas.get(i);
+                data[i][0] = String.valueOf(estadistica[0]); // ID del jugador
+                data[i][1] = String.valueOf(estadistica[1]); // Nombre del jugador
+                data[i][2] = String.valueOf(estadistica[2]); // Horas totales jugadas
+            }
+
+            // Definimos las columnas
+            String[] columnas = {"ID", "Nombre", "Horas Jugadas"};
+
+            // Creamos la tabla
+            JTable tablaEstadisticas = new JTable(data, columnas);
+            tablaEstadisticas.setFillsViewportHeight(true);
+
+            // Envolvemos la tabla en un JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaEstadisticas);
+
+            // Creamos el marco para mostrar la tabla
+            JFrame tablaFrame = new JFrame("Jugadores con Más Horas de Juego");
+            tablaFrame.setSize(800, 400); // Ajustamos el tamaño de la ventana
+            tablaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            tablaFrame.add(scrollPane);
+            tablaFrame.setVisible(true);
+        }
+
+        private void listarEstadisticaJugadoresMayorPuntuacion() {
+            // Simulamos los datos obtenidos de la base de datos
+            ArrayList<Object[]> listaEstadisticas = (ArrayList<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMayorPuntuacion");
+
+            // Preparamos los datos para la tabla
+            String[][] data = new String[listaEstadisticas.size()][3]; // 3 columnas: ID, Nombre, Puntuación
+
+            for (int i = 0; i < listaEstadisticas.size(); i++) {
+                Object[] estadistica = listaEstadisticas.get(i);
+                data[i][0] = String.valueOf(estadistica[0]); // ID del jugador
+                data[i][1] = String.valueOf(estadistica[1]); // Nombre del jugador
+                data[i][2] = String.valueOf(estadistica[2]); // Puntuación
+            }
+
+            // Definimos las columnas
+            String[] columnas = {"ID", "Nombre", "Puntuación"};
+
+            // Creamos la tabla
+            JTable tablaEstadisticas = new JTable(data, columnas);
+            tablaEstadisticas.setFillsViewportHeight(true);
+
+            // Envolvemos la tabla en un JScrollPane
+            JScrollPane scrollPane = new JScrollPane(tablaEstadisticas);
+
+            // Creamos el marco para mostrar la tabla
+            JFrame tablaFrame = new JFrame("Jugadores con Mayor Puntuación");
+            tablaFrame.setSize(800, 400); // Ajustamos el tamaño de la ventana
+            tablaFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            tablaFrame.add(scrollPane);
+            tablaFrame.setVisible(true);
+        }
+
     }
 }

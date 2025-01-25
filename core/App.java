@@ -17,7 +17,8 @@ public class App {
         router.registrarRuta("partidas", new PartidaControlador());
 
         // Iniciar vista con el router
-        VistaSwingRouter vista = new VistaSwingRouter(router);
+        //VistaSwingRouter vista = new VistaSwingRouter(router);
+        VistaConsolaRouter vista = new VistaConsolaRouter(router);
         vista.mostrarMenu();
     }
 }

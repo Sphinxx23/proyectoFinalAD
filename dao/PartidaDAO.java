@@ -81,8 +81,6 @@ public class PartidaDAO implements DAO<Partida> {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-            stmt.executeUpdate();
-
             int rowsAffected = stmt.executeUpdate();
 
             return rowsAffected > 0;

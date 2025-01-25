@@ -153,13 +153,108 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-            stmt.executeUpdate();
             int rowsAffected = stmt.executeUpdate();
 
-            return rowsAffected > 0;
+            return rowsAffected != 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+
+    public List<Object[]> listarEstadisticasVideojuegosHoras() {
+        String sql = """
+        SELECT 
+            j.id AS id_videojuego,
+            j.titulo,
+            COALESCE(SUM(p.tiempo), 0) AS horas_jugadas
+        FROM 
+            videojuego j
+        LEFT JOIN 
+            partida p ON j.id = p.id_vid
+        GROUP BY 
+            j.id, j.titulo
+        ORDER BY 
+            horas_jugadas DESC;
+        """;
+        List<Object[]> estadisticas = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                // Extraemos los datos y los agregamos como un arreglo de objetos
+                estadisticas.add(new Object[]{
+                        rs.getInt("id_videojuego"),       // ID del videojuego
+                        rs.getString("titulo"),           // Título del videojuego
+                        rs.getInt("horas_jugadas")         // Tiempo total jugado (en horas)
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return estadisticas;
+    }
+
+
+    public List<Object[]> listarEstadisticasVideojuegosJugadoresTotales() {
+        String sql = """
+        SELECT 
+            videojuego.id AS id_videojuego,
+            videojuego.titulo AS titulo,
+            COUNT(DISTINCT partida.id_jug) AS jugadores_totales
+        FROM 
+            videojuego
+        LEFT JOIN 
+            partida ON videojuego.id = partida.id_vid
+        GROUP BY 
+            videojuego.id, videojuego.titulo
+        ORDER BY 
+            jugadores_totales DESC;
+        """;
+
+        List<Object[]> estadisticas = new ArrayList<>();
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                // Extraemos los datos y los agregamos como un arreglo de objetos
+                estadisticas.add(new Object[]{
+                        rs.getInt("id_videojuego"),       // ID del videojuego
+                        rs.getString("titulo"),           // Título del videojuego
+                        rs.getInt("jugadores_totales")    // Jugadores totales (únicos)
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return estadisticas;
+    }
+
+    public boolean editarVideojuego(VideoJuego videojuego) {
+        String sql = "UPDATE videojuego SET titulo = ?, genero = ?, precio = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, videojuego.getTitulo());
+            stmt.setString(2, videojuego.getGenero());
+            stmt.setDouble(3, videojuego.getPrecio());
+            stmt.setInt(4, videojuego.getId());
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 }
