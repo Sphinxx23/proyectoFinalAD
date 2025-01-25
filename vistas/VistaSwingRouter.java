@@ -25,13 +25,17 @@ public class VistaSwingRouter {
         // Crear la ventana principal
         frame = new JFrame("Menú Principal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 800);
+        frame.setSize(800, 600); // Tamaño ajustado para 3 columnas de botones
 
-        // Crear el panel principal
+        // Centrar la ventana en la pantalla
+        frame.setLocationRelativeTo(null);
+
+        // Crear el panel principal con un borde y espaciado agradable
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(21, 1, 10, 10)); // 21 opciones, espaciadas
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setLayout(new GridLayout(0, 3, 10, 10)); // 3 columnas
 
-        // Crear botones para cada opción del menú
+        // Crear botones para cada opción del menú con un diseño atractivo
         String[] opciones = {
                 "Agregar Jugador",
                 "Listar todos los Jugadores",
@@ -60,6 +64,14 @@ public class VistaSwingRouter {
 
         for (String opcion : opciones) {
             JButton button = new JButton(opcion);
+            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setBackground(new Color(70, 130, 180));
+            button.setForeground(Color.WHITE);
+            button.setFocusPainted(false);
+            button.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(25, 25, 112), 2),
+                    BorderFactory.createEmptyBorder(10, 20, 10, 20)
+            ));
             button.addActionListener(new MenuActionListener(opcion));
             panel.add(button);
         }

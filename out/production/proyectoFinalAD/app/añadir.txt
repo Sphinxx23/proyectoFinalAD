@@ -1,0 +1,4 @@
+Añadir columna puntuacion jugadores
+Agregar una opción consola que sea agrupar el menu
+
+

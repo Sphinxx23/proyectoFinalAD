@@ -11,7 +11,7 @@ public class DatabaseConfig {
     private static String connectionString;
 
     static {
-        try (FileReader reader = new FileReader("main/java/app/configuracion/Config.json")) {
+        try (FileReader reader = new FileReader("configuracion/Config.json")) {
             JSONParser parser = new JSONParser();
             JSONObject config = (JSONObject) parser.parse(reader);
 
