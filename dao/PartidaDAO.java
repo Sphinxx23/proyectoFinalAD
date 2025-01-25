@@ -11,6 +11,12 @@ import java.util.List;
 public class PartidaDAO implements DAO<Partida> {
 
     @Override
+    /**
+     * Método que guarda una partida en la base de datos.
+     *
+     * @param partida el objeto Partida que se va a guardar.
+     * @return true si la partida se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(Partida partida) {
         String sql = "INSERT INTO partida (id_jug, id_vid, tiempo, fecha) VALUES (?, ?, ?, ?)";
 
@@ -35,6 +41,12 @@ public class PartidaDAO implements DAO<Partida> {
     }
 
     @Override
+    /**
+     * Método que busca una partida en la base de datos por su ID.
+     *
+     * @param id el ID de la partida a buscar.
+     * @return el objeto Partida si se encuentra, null en caso contrario.
+     */
     public Partida buscarPorId(int id) {
         String sql = "SELECT * FROM partida WHERE id = ?";
         Partida partida = null;
@@ -55,6 +67,11 @@ public class PartidaDAO implements DAO<Partida> {
     }
 
     @Override
+    /**
+     * Método que lista todas las partidas de la base de datos.
+     *
+     * @return una lista de objetos Partida.
+     */
     public List<Partida> listarTodos() {
         String sql = "SELECT * FROM partida";
         List<Partida> partidas = new ArrayList<>();
@@ -74,6 +91,12 @@ public class PartidaDAO implements DAO<Partida> {
     }
 
     @Override
+    /**
+     * Método que elimina una partida de la base de datos por su ID.
+     *
+     * @param id el ID de la partida a eliminar.
+     * @return true si la partida se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int id) {
         String sql = "DELETE FROM partida WHERE id = ?";
 

@@ -9,6 +9,12 @@ import java.util.List;
 public class VideoJuegoDAO implements DAO<VideoJuego> {
 
     @Override
+    /**
+     * Método que guarda un videojuego en la base de datos.
+     *
+     * @param videojuego el objeto VideoJuego que se va a guardar.
+     * @return true si el videojuego se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(VideoJuego videojuego) {
         String sql = "INSERT INTO videojuego (titulo, genero, precio) VALUES (?, ?, ?)";
 
@@ -32,6 +38,12 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
     }
 
     @Override
+    /**
+     * Método que busca un videojuego en la base de datos por su ID.
+     *
+     * @param id el ID del videojuego a buscar.
+     * @return el objeto VideoJuego si se encuentra, null en caso contrario.
+     */
     public VideoJuego buscarPorId(int id) {
         String sql = "SELECT * FROM videojuego WHERE id = ?";
         VideoJuego videojuego = null;
@@ -53,6 +65,11 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
     }
 
     @Override
+    /**
+     * Método que lista todos los videojuegos de la base de datos.
+     *
+     * @return una lista de objetos VideoJuego.
+     */
     public List<VideoJuego> listarTodos() {
         String sql = "SELECT * FROM videojuego";
         List<VideoJuego> videojuegos = new ArrayList<>();
@@ -71,6 +88,11 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         return videojuegos;
     }
 
+    /**
+     * Método que lista todos los videojuegos de la base de datos ordenados de más caro a más barato.
+     *
+     * @return una lista de objetos VideoJuego ordenados por precio en orden descendente.
+     */
     public List<VideoJuego> listarDeMasCaroAMasBarato() {
         String sql = "SELECT * FROM videojuego ORDER BY precio DESC";
         List<VideoJuego> videojuegos = new ArrayList<>();
@@ -110,6 +132,12 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         return videojuegos;
     }
 
+    /**
+     * Método que lista todos los videojuegos de un género específico de la base de datos.
+     *
+     * @param genero el género de los videojuegos a listar.
+     * @return una lista de objetos VideoJuego que pertenecen al género especificado.
+     */
     public List<VideoJuego> listarVideojuegosDeJugadorID(int id_jug) {
         String sql = "SELECT id_vid FROM partida WHERE id_jug = ?";
         List<Integer> videojuegos = new ArrayList<>();
@@ -133,6 +161,12 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         return nombreVideojuegos;
     }
 
+    /**
+     * Método que obtiene una lista de videojuegos a partir de una lista de IDs.
+     *
+     * @param ids la lista de IDs de los videojuegos a obtener.
+     * @return una lista de objetos VideoJuego que corresponden a los IDs especificados.
+     */
     public List<VideoJuego> obtenerVideojuegos(List<Integer> ids) {
         List<VideoJuego> videojuegos = new ArrayList<>();
         for (int id : ids) {
@@ -146,6 +180,12 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
 
 
     @Override
+    /**
+     * Método que elimina un videojuego de la base de datos por su ID.
+     *
+     * @param id el ID del videojuego a eliminar.
+     * @return true si el videojuego se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int id) {
         String sql = "DELETE FROM videojuego WHERE id = ?";
 
@@ -162,6 +202,13 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         }
     }
 
+    /**
+     * Método que obtiene las estadísticas de los videojuegos con el tiempo total jugado (en horas) y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @return una lista de objetos con las estadísticas de los videojuegos.
+     */
     public List<Object[]> listarEstadisticasVideojuegosHoras() {
         String sql = """
         SELECT 
@@ -198,7 +245,13 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         return estadisticas;
     }
 
-
+    /**
+     * Método que obtiene las estadísticas de los videojuegos con el total de jugadores únicos y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @return una lista de objetos con las estadísticas de los videojuegos.
+     */
     public List<Object[]> listarEstadisticasVideojuegosJugadoresTotales() {
         String sql = """
         SELECT 
@@ -236,6 +289,12 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
         return estadisticas;
     }
 
+    /**
+     * Método que actualiza los datos de un videojuego en la base de datos.
+     *
+     * @param videojuego el objeto VideoJuego con los datos actualizados.
+     * @return true si el videojuego se actualiza correctamente, false en caso contrario.
+     */
     public boolean editarVideojuego(VideoJuego videojuego) {
         String sql = "UPDATE videojuego SET titulo = ?, genero = ?, precio = ? WHERE id = ?";
 
@@ -255,6 +314,4 @@ public class VideoJuegoDAO implements DAO<VideoJuego> {
             return false;
         }
     }
-
-
 }

@@ -9,6 +9,12 @@ import java.util.List;
 public class JugadorDAO implements DAO<Jugador> {
 
     @Override
+    /**
+     * Método que guarda un jugador en la base de datos.
+     *
+     * @param jugador el objeto Jugador que se va a guardar.
+     * @return true si el jugador se guarda correctamente, false en caso contrario.
+     */
     public boolean guardar(Jugador jugador) {
         String sql = "INSERT INTO jugador (nombre, nivel, puntuacion) VALUES (?, ?, ?)";
 
@@ -27,6 +33,12 @@ public class JugadorDAO implements DAO<Jugador> {
         }
     }
 
+    /**
+     * Método que actualiza los datos de un jugador en la base de datos.
+     *
+     * @param jugador el objeto Jugador con los datos actualizados.
+     * @return true si el jugador se actualiza correctamente, false en caso contrario.
+     */
     public boolean editarJugador(Jugador jugador) {
         String sql = "UPDATE jugador SET nombre = ?, nivel = ?, puntuacion = ? WHERE id = ?";
 
@@ -49,6 +61,12 @@ public class JugadorDAO implements DAO<Jugador> {
 
 
     @Override
+    /**
+     * Método que busca un jugador en la base de datos por su ID.
+     *
+     * @param id el ID del jugador a buscar.
+     * @return el objeto Jugador si se encuentra, null en caso contrario.
+     */
     public Jugador buscarPorId(int id) {
         String sql = "SELECT * FROM jugador WHERE id = ?";
         Jugador jugador = null;
@@ -69,6 +87,12 @@ public class JugadorDAO implements DAO<Jugador> {
         return jugador;
     }
 
+    /**
+     * Método que busca un jugador en la base de datos por su nombre.
+     *
+     * @param nombre el nombre del jugador a buscar.
+     * @return el objeto Jugador si se encuentra, null en caso contrario.
+     */
     public Jugador buscarPorNombre(String nombre) {
         String sql = "SELECT * FROM jugador WHERE nombre = ?";
         Jugador jugador = null;
@@ -90,6 +114,11 @@ public class JugadorDAO implements DAO<Jugador> {
     }
 
     @Override
+    /**
+     * Método que lista todos los jugadores de la base de datos.
+     *
+     * @return una lista de objetos Jugador.
+     */
     public List<Jugador> listarTodos() {
         String sql = "SELECT * FROM jugador";
         List<Jugador> jugadores = new ArrayList<>();
@@ -109,6 +138,12 @@ public class JugadorDAO implements DAO<Jugador> {
     }
 
     @Override
+    /**
+     * Método que elimina un jugador de la base de datos por su ID.
+     *
+     * @param id el ID del jugador a eliminar.
+     * @return true si el jugador se elimina correctamente, false en caso contrario.
+     */
     public boolean eliminar(int id) {
         String sql = "DELETE FROM jugador WHERE id = ?";
 
@@ -125,7 +160,11 @@ public class JugadorDAO implements DAO<Jugador> {
         }
     }
 
-    // Método para listar jugadores con más horas jugadas
+    /**
+     * Método que lista las estadísticas de los jugadores con el total de horas jugadas.
+     *
+     * @return una lista de objetos que representan las estadísticas de los jugadores.
+     */
     public List<Object[]> listarJugadoresMasHoras() {
         String sql = """
         SELECT 
@@ -161,7 +200,11 @@ public class JugadorDAO implements DAO<Jugador> {
         return estadisticas;
     }
 
-    // Método para listar jugadores con mayor puntuación
+    /**
+     * Método que lista las estadísticas de los jugadores con la mayor puntuación.
+     *
+     * @return una lista de objetos que representan las estadísticas de los jugadores.
+     */
     public List<Object[]> listarJugadoresMayorPuntuacion() {
         String sql = """
         SELECT 

@@ -90,6 +90,16 @@ public class VistaConsolaRouter {
         } while (opcionn != 23);
     }
 
+    /**
+     * Método que edita la información de un videojuego solicitando su ID, título, género y precio.
+     *
+     * Utiliza un Scanner para recibir las entradas del usuario y valida cada entrada
+     * para asegurarse de que los datos ingresados sean válidos.
+     * La acción de editar el videojuego se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
+
     private void editarVideojuego(Scanner scanner) {
 
         System.out.print("Ingrese ID del videojuego: ");
@@ -158,6 +168,16 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que edita la información de un jugador solicitando su ID, nombre, nivel y puntuación.
+     *
+     * Utiliza un Scanner para recibir las entradas del usuario y valida cada entrada
+     * para asegurarse de que los datos ingresados sean válidos.
+     * La acción de editar el jugador se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
+
     private void editarJugador(Scanner scanner) {
 
         System.out.print("Ingrese ID del jugador: ");
@@ -225,6 +245,11 @@ public class VistaConsolaRouter {
            }
     }
 
+    /**
+     * Método que obtiene las estadísticas de los jugadores y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de jugadores se realiza llamando al método 'ejecutarAccion' del router.
+     */
     private void estadisticaJugadorPuntuacion() {
         List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMayorPuntuacion");
 
@@ -232,6 +257,12 @@ public class VistaConsolaRouter {
             System.out.println("ID: " +  videoJuego[0] +" Nombre: "+  videoJuego[1] + " Puntuacion: " + videoJuego[2]);
         }
     }
+
+    /**
+     * Método que obtiene las estadísticas de los jugadores y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de jugadores se realiza llamando al método 'ejecutarAccion' del router.
+     */
     private void estadisticaJugadorHoras() {
         List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("jugadores", "listarJugadoresMasHoras");
 
@@ -241,6 +272,11 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que obtiene las estadísticas de los videojuegos y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     */
     private void estadisticaVideojuegoJugador() {
         List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosJugadoresTotales");
 
@@ -250,6 +286,11 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que obtiene las estadísticas de los videojuegos y las imprime en la consola.
+     *
+     * La acción de listar estadísticas de videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     */
     private void estadisticaVideojuegoHoras() {
         List<Object[]> videoJuegos = (List<Object[]>) router.ejecutarAccion("videojuegos", "listarEstadisticasVideojuegosHoras");
 
@@ -257,6 +298,15 @@ public class VistaConsolaRouter {
             System.out.println("ID: " +  videoJuego[0] +" Titulo: "+  videoJuego[1] + " Segundos jugados : " + videoJuego[2]);
         }
     }
+
+    /**
+     * Método que solicita al usuario el ID de un jugador y lista los videojuegos jugados por dicho jugador.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * Busca el jugador a través del router y, si existe, lista los videojuegos jugados por el jugador.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
 
     private void listarVidejuegosJugadoPorXJugador(Scanner scanner) {
         System.out.println("Escribe el id del jugador: ");
@@ -290,6 +340,13 @@ public class VistaConsolaRouter {
             System.out.println("No se encontraron videojuegos para el jugador con ID " + idd);
         }
     }
+
+    /**
+     * Método que obtiene una lista de videojuegos ordenada de más caro a más barato a través del router y la imprime en la consola.
+     *
+     * La acción de listar videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     */
+
     private void listarVideojuegosOrdenadoCaroBarato() {
         List<VideoJuego> videoJuegos = (List<VideoJuego>) router.ejecutarAccion("videojuegos", "listarDeMasCaroAMasBarato");
 
@@ -297,6 +354,16 @@ public class VistaConsolaRouter {
             System.out.println(videoJuego);
         }
     }
+
+    /**
+     * Método que solicita al usuario un género de videojuego, busca los videojuegos de ese género a través del router
+     * y los muestra en la consola.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el género ingresado no esté vacío.
+     * La búsqueda se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
 
     private void listarVideojuegoPorGenero(Scanner scanner) {
         System.out.println("Ingrese el genero: ");
@@ -324,6 +391,16 @@ public class VistaConsolaRouter {
         }
     }
 
+    /**
+     * Método que solicita al usuario el nombre de un jugador, lo busca a través del router
+     * y muestra la información del jugador en la consola.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el nombre ingresado no esté vacío.
+     * La búsqueda se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
+
     private void buscarJugadorPorNombre(Scanner scanner) {
         System.out.println("Ingrese el nombre del jugador: ");
         String nombre = scanner.nextLine();
@@ -347,6 +424,14 @@ public class VistaConsolaRouter {
         }
     }
 
+    /**
+     * Método que solicita al usuario el ID de una partida para eliminarla, lo valida y la elimina a través del router.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La acción de eliminar la partida se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void eliminarPartida(Scanner scanner) {
         System.out.println("Ingrese el ID de la partida a eliminar: ");
         boolean f;
@@ -367,6 +452,15 @@ public class VistaConsolaRouter {
         mensajeBorrado(resultado);
     }
 
+    /**
+     * Método que solicita al usuario el ID de una partida, lo busca a través del router
+     * y muestra la información de la partida en la consola.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La búsqueda se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void listarPartidaPorId(Scanner scanner) {
         System.out.println("Ingrese el ID de la partida a buscar: ");
         boolean f;
@@ -394,6 +488,13 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que obtiene una lista de partidas a través del router y la imprime en la consola.
+     *
+     * La acción de listar partidas se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void listarPartidas(Scanner scanner) {
         List<Partida> listapartidas = (List<Partida>) router.ejecutarAccion("partidas", "listarPartidas");
 
@@ -402,6 +503,16 @@ public class VistaConsolaRouter {
         }
     }
 
+    /**
+     * Método que solicita al usuario los ID del jugador y del videojuego, valida su existencia,
+     * agrega una nueva partida a través del router y muestra el resultado.
+     *
+     * Utiliza un Scanner para recibir las entradas del usuario y valida cada entrada
+     * para asegurarse de que los datos ingresados sean válidos.
+     * La acción de agregar la partida se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void agregarPartida(Scanner scanner) {
 
         Object videojuegoEncontrado = null;
@@ -447,11 +558,26 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que genera un tiempo aleatorio en segundos.
+     *
+     * Utiliza la clase Random para generar un número aleatorio entre 1 y 3600 segundos.
+     *
+     * @return un número aleatorio entre 1 y 3600.
+     */
     private Object generarTiempoAleatorio() {
         Random r = new Random();
         return r.nextInt(1,3600);
     }
 
+    /**
+     * Método que solicita al usuario el ID de un videojuego para eliminarlo, lo valida y lo elimina a través del router.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La acción de eliminar el videojuego se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void eliminarVideojuego(Scanner scanner) {
         System.out.println("Ingrese el ID del videojuego a eliminar: ");
         boolean f;
@@ -474,6 +600,15 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que solicita al usuario el ID de un videojuego, lo busca a través del router
+     * y muestra la información del videojuego en la consola.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La búsqueda se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void listarVideojuegoPorId(Scanner scanner) {
         System.out.println("Ingrese el ID del videojuego a buscar: ");
         boolean f;
@@ -499,6 +634,15 @@ public class VistaConsolaRouter {
         }
     }
 
+    /**
+     * Método que solicita al usuario el ID de un jugador para eliminarlo, lo valida y lo elimina a través del router.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La acción de eliminar el jugador se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
+
     private void eliminarJugador(Scanner scanner) {
         System.out.println("Ingrese el ID del jugador a eliminar: ");
         boolean f;
@@ -518,6 +662,16 @@ public class VistaConsolaRouter {
         boolean resultado = (boolean)router.ejecutarAccion("jugadores", "eliminarJugador", id);
         mensajeBorrado(resultado);
     }
+
+    /**
+     * Método que solicita al usuario el ID de un jugador, lo busca a través del router
+     * y muestra la información del jugador en la consola.
+     *
+     * Utiliza un Scanner para recibir la entrada del usuario y valida que el ID ingresado sea un número válido.
+     * La búsqueda se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
 
     private void listarJugadorPorId(Scanner scanner) {
         System.out.println("Ingrese el ID del jugador a buscar: ");
@@ -544,6 +698,15 @@ public class VistaConsolaRouter {
         }
     }
 
+    /**
+     * Método que agrega un nuevo jugador solicitando su nombre, nivel y puntuación.
+     *
+     * Utiliza un Scanner para recibir las entradas del usuario y valida cada entrada
+     * para asegurarse de que los datos ingresados sean válidos.
+     * La acción de agregar el jugador se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
     private void agregarJugador(Scanner scanner) {
         System.out.print("Ingrese nombre del jugador: ");
         String nombre = scanner.nextLine();
@@ -593,6 +756,11 @@ public class VistaConsolaRouter {
         mensajeRegistro(resultado);
     }
 
+    /**
+     * Método que obtiene una lista de jugadores a través del router y la imprime en la consola.
+     *
+     * La acción de listar jugadores se realiza llamando al método 'ejecutarAccion' del router.
+     */
     private void listarJugadores() {
         List<Jugador> listaJugadores = (List<Jugador>) router.ejecutarAccion("jugadores", "listarJugadores");
 
@@ -601,6 +769,16 @@ public class VistaConsolaRouter {
         }
 
     }
+
+    /**
+     * Método que agrega un nuevo videojuego solicitando su título, género y precio.
+     *
+     * Utiliza un Scanner para recibir las entradas del usuario y valida cada entrada
+     * para asegurarse de que los datos ingresados sean válidos.
+     * La acción de agregar el videojuego se realiza llamando al método 'ejecutarAccion' del router.
+     *
+     * @param scanner el objeto Scanner utilizado para recibir las entradas del usuario.
+     */
 
     private void agregarVideojuego(Scanner scanner) {
         System.out.print("Ingrese el título del videojuego: ");
@@ -649,6 +827,12 @@ public class VistaConsolaRouter {
         mensajeRegistro(resultado);
     }
 
+    /**
+     * Método que obtiene una lista de videojuegos a través del router y la imprime en la consola.
+     *
+     * La acción de listar videojuegos se realiza llamando al método 'ejecutarAccion' del router.
+     */
+
     private void listarVideojuegos() {
         List<VideoJuego> listaVideojuegos = (List<VideoJuego>) router.ejecutarAccion("videojuegos", "listarVideojuegos");
 
@@ -658,6 +842,11 @@ public class VistaConsolaRouter {
 
     }
 
+    /**
+     * Método que muestra un mensaje en la consola indicando si una operación de registro ha sido exitosa o no.
+     *
+     * @param resultado el resultado de la operación de registro.
+     */
     private void mensajeRegistro(boolean resultado){
         if (resultado){
             System.out.println("Ha sido agregado correctamente");
@@ -666,6 +855,12 @@ public class VistaConsolaRouter {
         }
 
     }
+
+    /**
+     * Método que muestra un mensaje en la consola indicando si una operación de borrado ha sido exitosa o no.
+     *
+     * @param resultado el resultado de la operación de borrado.
+     */
     private void mensajeBorrado(boolean resultado){
         if (resultado){
             System.out.println("Ha sido eliminado correctamente");

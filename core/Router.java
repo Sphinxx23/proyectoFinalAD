@@ -17,7 +17,14 @@ public class Router {
         return rutas.get(nombre);
     }
 
-    // Ejecutar un método en un controlador dinámicamente
+    /**
+     * Método que ejecuta una acción en un controlador basado en la ruta y el nombre de la acción proporcionados.
+     *
+     * @param ruta la ruta del controlador.
+     * @param accion el nombre de la acción a ejecutar.
+     * @param parametros los parámetros a pasar al método de la acción.
+     * @return el resultado de la ejecución del método de la acción, o null si ocurre un error.
+     */
     public Object ejecutarAccion(String ruta, String accion, Object... parametros) {
         Object controlador = obtenerRuta(ruta);
 
@@ -40,7 +47,12 @@ public class Router {
         return null;
     }
 
-
+    /**
+     * Método que convierte un arreglo de objetos en un arreglo de clases correspondientes, manejando correctamente las primitivas.
+     *
+     * @param parametros el arreglo de objetos a convertir.
+     * @return un arreglo de clases correspondientes a los objetos.
+     */
     private Class<?>[] convertirParametros(Object[] parametros) {
         if (parametros == null) {
             return new Class<?>[0];
