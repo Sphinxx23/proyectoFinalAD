@@ -25,7 +25,7 @@ public class VistaSwingRouter {
         // Crear la ventana principal
         frame = new JFrame("Menú Principal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600); // Tamaño ajustado para 3 columnas de botones
+        frame.setSize(1000, 700); // Tamaño ajustado para que el texto se vea completo
 
         // Centrar la ventana en la pantalla
         frame.setLocationRelativeTo(null);
@@ -33,19 +33,21 @@ public class VistaSwingRouter {
         // Crear el panel principal con un borde y espaciado agradable
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setLayout(new GridLayout(0, 3, 10, 10)); // 3 columnas
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Crear paneles para cada categoría con borde
+        JPanel panelVideojuegos = new JPanel(new GridLayout(0, 1, 5, 5));
+        panelVideojuegos.setBorder(BorderFactory.createTitledBorder("Videojuegos"));
+        JPanel panelJugadores = new JPanel(new GridLayout(0, 1, 5, 5));
+        panelJugadores.setBorder(BorderFactory.createTitledBorder("Jugadores"));
+        JPanel panelPartidas = new JPanel(new GridLayout(0, 1, 5, 5));
+        panelPartidas.setBorder(BorderFactory.createTitledBorder("Partidas"));
 
         // Crear botones para cada opción del menú con un diseño atractivo
-        String[] opciones = {
-                "Agregar Jugador",
-                "Listar todos los Jugadores",
-                "Editar Jugador",
-                "Buscar jugador por ID",
-                "Buscar jugador por Nombre",
-                "Estadistica jugadores mas horas",
-                "Estadistica jugadores mas puntuación",
-                "Eliminar Jugador",
-                "Listar Videojuegos a los que ha jugado X jugador",
+        String[] videojuegos = {
                 "Agregar Videojuego",
                 "Listar Videojuegos",
                 "Editar Videojuego",
@@ -54,17 +56,53 @@ public class VistaSwingRouter {
                 "Buscar videojuego por ID",
                 "Estadistica videojuegos mas horas",
                 "Estadistica videojuegos mas jugadores",
-                "Eliminar Videojuego",
+                "Eliminar Videojuego"
+        };
+
+        String[] jugadores = {
+                "Agregar Jugador",
+                "Listar todos los Jugadores",
+                "Editar Jugador",
+                "Buscar jugador por ID",
+                "Buscar jugador por Nombre",
+                "Estadistica jugadores mas horas",
+                "Estadistica jugadores mas puntuación",
+                "Eliminar Jugador",
+                "Listar Videojuegos a los que ha jugado X jugador"
+        };
+
+        String[] partidas = {
                 "Agregar Partida",
                 "Listar Partidas",
-                "Listar partida por ID",
+                "Buscar partida por ID",
                 "Eliminar Partida",
                 "Salir"
         };
 
+        agregarBotones(panelVideojuegos, videojuegos);
+        agregarBotones(panelJugadores, jugadores);
+        agregarBotones(panelPartidas, partidas);
+
+        // Añadir los paneles con separaciones visibles
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(panelVideojuegos, gbc);
+        gbc.gridx = 1;
+        panel.add(panelJugadores, gbc);
+        gbc.gridx = 2;
+        panel.add(panelPartidas, gbc);
+
+        // Agregar el panel principal a la ventana
+        frame.add(panel);
+
+        // Hacer la ventana visible
+        frame.setVisible(true);
+    }
+
+    private void agregarBotones(JPanel panel, String[] opciones) {
         for (String opcion : opciones) {
             JButton button = new JButton(opcion);
-            button.setFont(new Font("Arial", Font.PLAIN, 16));
+            button.setFont(new Font("Arial", Font.PLAIN, 14));
             button.setBackground(new Color(70, 130, 180));
             button.setForeground(Color.WHITE);
             button.setFocusPainted(false);
@@ -75,12 +113,6 @@ public class VistaSwingRouter {
             button.addActionListener(new MenuActionListener(opcion));
             panel.add(button);
         }
-
-        // Agregar el panel a la ventana principal
-        frame.add(panel);
-
-        // Hacer la ventana visible
-        frame.setVisible(true);
     }
 
     // Clase para manejar los eventos de los botones
